@@ -1,5 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import { useColorScheme as _useColorScheme, ColorSchemeName } from 'react-native';
+import {
+  useColorScheme as _useColorScheme,
+  ColorSchemeName,
+} from 'react-native';
 
 // The useColorScheme value is always either light or dark, but the built-in
 // type suggests that it can be null. This will not happen in practice, so this

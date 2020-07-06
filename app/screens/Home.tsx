@@ -1,8 +1,8 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
-import SearchWidget from '../components/SearchWidget.tsx';
+import SearchWidget from '../components/SearchWidget/SearchWidget.tsx';
 
-export function Home() : JSX.Element {
+export function Home(): JSX.Element {
   return (
     <>
       <Appbar.Header>
