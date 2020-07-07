@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Linking } from 'react-native';
+import { Linking } from 'react-native';
+import { Button } from 'react-native-paper';
 
 class VisitWebsiteButton extends React.Component<{ url?: string }> {
   constructor(props: Readonly<{ url?: string }>) {

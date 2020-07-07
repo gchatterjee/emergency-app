@@ -1,16 +1,15 @@
 import React from 'react';
-import { Appbar } from 'react-native-paper';
-import SearchWidget from '../components/SearchWidget/SearchWidget.tsx';
+import SearchWidget from '../components/SearchWidget/SearchWidget';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export function Home(): JSX.Element {
-  return (
-    <>
-      <Appbar.Header>
-        <Appbar.Content title="Emergency" />
-      </Appbar.Header>
-      <SearchWidget />
-    </>
-  );
+class Home extends React.Component<{ navigation: StackNavigationProp }> {
+  render(): JSX.Element {
+    return (
+      <>
+        <SearchWidget navigation={this.props.navigation} />
+      </>
+    );
+  }
 }
 
 export default Home;

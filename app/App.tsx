@@ -1,18 +1,32 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { Home } from './screens/Home.tsx';
-import useCachedResources from './hooks/useCachedResources.ts';
+import Home from './screens/Home';
+import Results from './screens/Results';
+// import useCachedResources from './hooks/useCachedResources';
 
-export default function App(): JSX.Element {
-  const isLoadingComplete = useCachedResources();
+class App extends React.Component {
+  render(): JSX.Element {
+    // const isLoadingComplete = useCachedResources();
+    const Stack = createStackNavigator();
 
-  if (!isLoadingComplete) {
-    return null;
+    // if (!isLoadingComplete) {
+    //   return null;
+    // }
+
+    return (
+      <NavigationContainer>
+        <SafeAreaProvider>
+          <Stack.Navigator>
+            <Stack.Screen name='Home' component={Home} />
+            <Stack.Screen name='Results' component={Results} />
+          </Stack.Navigator>
+        </SafeAreaProvider>
+      </NavigationContainer>
+    );
   }
-  return (
-    <SafeAreaProvider>
-      <Home />
-    </SafeAreaProvider>
-  );
 }
+
+export default App;
