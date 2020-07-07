@@ -6,7 +6,6 @@ export function getSearchResults(
   stub = false,
 ): Promise<SearchResults> {
   if (stub) {
-    console.log(getSearchResultsStub(query));
     return getSearchResultsStub(query);
   } else {
     return Promise.resolve({ query, results: [] }); // TODO: implement

@@ -1,9 +1,8 @@
-import { SearchResult } from './SearchWidget/SearchResults';
+import { SearchResult } from './SearchResults';
 
 const exampleSearchResult0: SearchResult = {
   type: ['mental health'],
   name: 'Happiness Organization',
-  phoneNumber: '9875554321',
   coverage: ['Milwaukee, WI'],
   url: 'http://www.example.com/happiness',
   physicalAddress: '321 Happiness Way, Milwaukee, WI 53218',
@@ -28,7 +27,6 @@ const exampleSearchResult2: SearchResult = {
   is24HourHotline: true,
   trsNumber: '1235556789',
   coverage: ['Wisconsin', 'Minnesota'],
-  url: 'http://www.example.com/sound-mind-and-spirit-hotline-of-WI-and-MN',
   notes: 'press 1 for Wisconsin, 2 for Minnesota',
 };
 
