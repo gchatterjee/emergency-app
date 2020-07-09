@@ -5,24 +5,37 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 export class SearchWidget extends React.Component<{
   navigation: StackNavigationProp;
+  showSnackbar: (text: string) => void;
 }> {
-  query!: string;
+  constructor(
+    props: Readonly<{
+      navigation: StackNavigationProp;
+      showSnackbar: (text: string) => void;
+    }>,
+  ) {
+    super(props);
+    this.state = { query: '' };
+  }
 
   render(): JSX.Element {
+    const { navigation, showSnackbar } = this.props;
+
     return (
       <Searchbar
         placeholder='Search'
-        onChangeText={(query) => {
-          this.query = query;
-        }}
-        onSubmitEditing={() => {
-          getSearchResults(cleanInput(this.query), true)
+        onChangeText={(query) => this.setState({ query })}
+        onSubmitEditing={() =>
+          getSearchResults(cleanInput(this.state.query), true) // TODO: remove stub
             .then((results) => {
-              this.props.navigation.navigate('Results', results);
+              if (results.results.length === 0) {
+                showSnackbar(`No results for "${this.state.query}"`);
+              } else {
+                navigation.navigate('Results', results);
+              }
             })
-            .catch((err) => console.log(err)); // TODO: remove stub
-        }}
-        value={this.query}
+            .catch(() => showSnackbar('Something went wrong.'))
+        }
+        value={this.state.query}
       />
     );
   }

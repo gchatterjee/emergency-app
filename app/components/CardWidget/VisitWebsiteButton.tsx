@@ -1,25 +1,14 @@
 import React from 'react';
-import { Linking } from 'react-native';
 import { Button } from 'react-native-paper';
+import { goToUrl } from './cardWidget.service';
 
-class VisitWebsiteButton extends React.Component<{ url?: string }> {
-  constructor(props: Readonly<{ url?: string }>) {
-    super(props);
-  }
-
-  goToUrl(url: string): void {
-    if (url) {
-      Linking.canOpenURL(url).then((isSupported: boolean) => {
-        if (isSupported) {
-          Linking.openURL(url);
-        }
-      });
-    }
-  }
-
+class VisitWebsiteButton extends React.Component<{
+  url?: string;
+  showSnackbar: (text: string) => void;
+}> {
   render(): JSX.Element {
     const buttonText = 'Visit Website';
-    const { url } = this.props;
+    const { url, showSnackbar } = this.props;
 
     return (
       <Button
@@ -27,7 +16,13 @@ class VisitWebsiteButton extends React.Component<{ url?: string }> {
         accessibilityLabel={buttonText}
         onPress={() => {
           if (url) {
-            this.goToUrl(url);
+            goToUrl(url)
+              .then((went) =>
+                showSnackbar(went ? `Going to ${url}.` : `Can't open ${url}.`),
+              )
+              .catch(() => showSnackbar('Something went wrong.'));
+          } else {
+            showSnackbar('There is no valid URL.');
           }
         }}
       >
