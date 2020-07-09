@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { SearchResult } from '../SearchWidget/SearchResults';
-import CallButton from './CallButton';
-import VisitWebsiteButton from './VisitWebsiteButton';
+import UrlButton from './urlButton';
 
 class CardWidget extends React.Component<{
   resource: SearchResult;
@@ -22,14 +21,26 @@ class CardWidget extends React.Component<{
       <Card style={styles.card}>
         <Card.Title title={resource.name}></Card.Title>
         <Card.Actions>
-          <CallButton
-            phoneNumber={resource.phoneNumber}
+          <UrlButton
+            url={resource.phoneNumber && `tel:${resource.phoneNumber}`}
             showSnackbar={showSnackbar}
-          ></CallButton>
-          <VisitWebsiteButton
+            text={'Call'}
+            snackbarText={{
+              executing: 'Calling <%= url %>.',
+              cantExecute: "Couldn't call <%= url %>.",
+              doesNotExist: "Phone number doesn't exist.",
+            }}
+          ></UrlButton>
+          <UrlButton
             url={resource.url}
             showSnackbar={showSnackbar}
-          ></VisitWebsiteButton>
+            text={'Visit Website'}
+            snackbarText={{
+              executing: 'Visiting <%= url %>.',
+              cantExecute: "Couldn't visit <%= url %>.",
+              doesNotExist: "Url doesn't exist.",
+            }}
+          ></UrlButton>
         </Card.Actions>
       </Card>
     );
