@@ -4,7 +4,7 @@ const exampleSearchResult0: SearchResult = {
   type: ['mental health'],
   name: 'Happiness Organization',
   coverage: ['Milwaukee, WI'],
-  url: 'http://www.example.com/happiness',
+  url: 'dicbwvibcidbciwdbib',
   physicalAddress: '321 Happiness Way, Milwaukee, WI 53218',
 };
 
