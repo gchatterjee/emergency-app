@@ -3,9 +3,9 @@ import { ScrollView } from 'react-native';
 import {
   SearchResults,
   SearchResult,
-} from '../components/SearchWidget/SearchResults';
+} from '../home/SearchWidget/SearchResults';
 import { Title, Snackbar } from 'react-native-paper';
-import CardWidget from '../components/CardWidget/CardWidget';
+import CardWidget from './CardWidget/CardWidget';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 class Results extends React.Component<{
