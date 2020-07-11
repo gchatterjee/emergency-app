@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { SearchResult } from '../SearchWidget/SearchResults';
-import UrlButton from './urlButton';
+import UrlButton from './UrlButton';
 
 class CardWidget extends React.Component<{
   resource: SearchResult;
