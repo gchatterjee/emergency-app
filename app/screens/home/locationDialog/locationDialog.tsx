@@ -1,18 +1,33 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { Dialog, Button, ProgressBar } from 'react-native-paper';
+import { Dialog, ProgressBar } from 'react-native-paper';
 import { locationDialogText } from './locationDialog.language';
-import { getLocation } from '../../../lib/location';
-import { LocationData } from 'expo-location';
+import {
+  getLocationData,
+  getCountyData,
+  getAddress,
+} from '../../../lib/location';
+import { FccCensusApiAreaResult } from '../../../lib/fccCensusApi';
+import { Address } from 'expo-location';
 
 class LocationDialog extends React.Component<{
   visible: boolean;
-  onSuccess: (position: LocationData) => void;
+  onSuccess: (
+    city?: string,
+    county?: string,
+    region?: string,
+    country?: string,
+  ) => void;
   onFailure: () => void;
 }> {
   constructor(props: {
     visible: boolean;
-    onSuccess: (position: LocationData) => void;
+    onSuccess: (
+      city?: string,
+      county?: string,
+      region?: string,
+      country?: string,
+    ) => void;
     onFailure: () => void;
   }) {
     super(props);
@@ -29,11 +44,30 @@ class LocationDialog extends React.Component<{
 
   componentDidMount(): void {
     this.setStateP({ progressBarVisible: true })
-      .then(getLocation)
-      .then((position) =>
-        this.setStateP({ progressBarVisible: false }).then(() =>
-          position ? this.props.onSuccess(position) : this.props.onFailure(),
-        ),
+      .then(getLocationData)
+      .then((location) =>
+        getAddress(location)
+          .then(({ city, region, country }) => {
+            getCountyData(location)
+              .then(({ county_name }) => {
+                this.props.onSuccess(city, county_name, region, country);
+              })
+              .catch(() =>
+                this.props.onSuccess(city, undefined, region, country),
+              );
+          })
+          .catch(() =>
+            getCountyData(location)
+              .then(({ county_name }) =>
+                this.props.onSuccess(
+                  undefined,
+                  county_name,
+                  undefined,
+                  undefined,
+                ),
+              )
+              .catch(() => this.props.onFailure()),
+          ),
       );
   }
 

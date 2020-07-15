@@ -5,7 +5,7 @@ import { goToUrl } from './cardWidget.service';
 
 class UrlButton extends React.Component<{
   url?: string;
-  showSnackbar: (text: string) => void;
+  showSnackbar: (text: string) => Promise<void>;
   text: string;
   snackbarText: {
     executing: string;

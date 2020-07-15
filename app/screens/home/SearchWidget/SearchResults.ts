@@ -1,17 +1,17 @@
 export interface SearchResults {
   query: string;
-  results: Array<SearchResult>;
+  results: SearchResult[];
 }
 
 export interface SearchResult {
-  type?: Array<string>;
+  type?: string[];
   name?: string;
   is24HourHotline?: boolean;
   phoneNumber?: string;
   trsNumber?: string;
   smsNumber?: string;
   smsTrigger?: string;
-  coverage?: Array<string>;
+  coverage?: string[];
   url?: string;
   isOnlineChatAvailable?: boolean;
   notes?: string;

@@ -6,7 +6,7 @@ import UrlButton from './UrlButton';
 
 class CardWidget extends React.Component<{
   resource: SearchResult;
-  showSnackbar: (text: string) => void;
+  showSnackbar: (text: string) => Promise<void>;
 }> {
   render(): JSX.Element {
     const { resource, showSnackbar } = this.props;

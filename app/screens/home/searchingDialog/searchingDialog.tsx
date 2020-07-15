@@ -9,7 +9,6 @@ class SearchingDialog extends React.Component<{
   onSuccess: (position: LocationData) => void;
   onFailure: () => void;
 }> {
-
   render(): JSX.Element {
     return (
       <Dialog visible={this.props.visible} dismissable={false}>

@@ -19,7 +19,27 @@ class Results extends React.Component<{
     }>,
   ) {
     super(props);
+    this.setStateP = this.setStateP.bind(this);
+    this.setSnackbarVisible = this.setSnackbarVisible.bind(this);
     this.state = { snackbarVisible: false, snackbarText: '' };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  setStateP(state: object): Promise<void> {
+    return new Promise((resolve) => {
+      this.setState(state, () => resolve());
+    });
+  }
+
+  setSnackbarVisible(visible: boolean, text?: string): Promise<void> {
+    return this.setStateP({
+      snackbarVisible: false,
+      snackbarText: '',
+    }).then(() =>
+      visible
+        ? this.setStateP({ snackbarVisible: true, snackbarText: text || '' })
+        : Promise.resolve(),
+    );
   }
 
   render(): JSX.Element {
@@ -32,28 +52,15 @@ class Results extends React.Component<{
             <CardWidget
               key={`${result.name}${index}`}
               resource={result}
-              showSnackbar={(text: string) => {
-                if (this.state.snackbarVisible) {
-                  this.setState(
-                    { snackbarVisible: false, snackbarText: text },
-                    () =>
-                      this.setState({
-                        snackbarVisible: true,
-                        snackbarText: text,
-                      }),
-                  );
-                } else {
-                  this.setState({ snackbarVisible: true, snackbarText: text });
-                }
-              }}
+              showSnackbar={(text: string) =>
+                this.setSnackbarVisible(true, text)
+              }
             />
           ))}
         </ScrollView>
         <Snackbar
           visible={this.state.snackbarVisible}
-          onDismiss={() => {
-            this.setState({ snackbarVisible: false });
-          }}
+          onDismiss={() => this.setSnackbarVisible(false)}
           duration={Snackbar.DURATION_SHORT}
         >
           {this.state.snackbarText}

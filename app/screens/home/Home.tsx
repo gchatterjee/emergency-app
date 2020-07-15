@@ -4,7 +4,6 @@ import SearchWidget from './SearchWidget/SearchWidget';
 import LocationDialog from './locationDialog/locationDialog';
 import SearchingDialog from './searchingDialog/searchingDialog';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { LocationData } from 'expo-location';
 import { HomeSnackbar } from './homeSnackbar/homeSnackbar';
 
 class Home extends React.Component<{ navigation: StackNavigationProp }> {
@@ -17,7 +16,10 @@ class Home extends React.Component<{ navigation: StackNavigationProp }> {
       snackbarText: '',
       locationDialogVisible: false,
       searchingDialogVisible: false,
-      position: null,
+      city: null,
+      county: null,
+      region: null,
+      country: null,
     };
   }
 
@@ -51,11 +53,24 @@ class Home extends React.Component<{ navigation: StackNavigationProp }> {
         />
         <Portal>
           <LocationDialog
-            visible={!this.state.position || this.state.dialogVisible}
-            onSuccess={(position: LocationData) =>
-              this.setStateP({ position })
-                .then(() => this.setStateP({ dialogVisible: false }))
-                .then(() => console.log(this.state.position))
+            visible={
+              !(this.state.city || this.state.region || this.state.country) ||
+              !this.state.county ||
+              this.state.dialogVisible
+            }
+            onSuccess={(
+              city?: string,
+              county?: string,
+              region?: string,
+              country?: string,
+            ) =>
+              this.setStateP({
+                city,
+                county,
+                region,
+                country,
+                dialogVisible: false,
+              }).then(() => console.log(this.state))
             }
             onFailure={() =>
               this.setSnackbarVisible(true, "Couldn't get location.")
